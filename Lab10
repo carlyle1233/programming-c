@@ -1,0 +1,98 @@
+
+#write a program integ 
+
+#1. 적분 대상 삼각함수의 이름(sin, cos, tan 중의 하나), 적분 구간을 나타내는 2개의 실수, 분할 구간의 수를 명령행 인수로 취함 
+#2. 분할 구간의 수가 주어지지 않을 경우에는 100으로 가정 
+#3. 삼각함수의 이름이 sin, cos, tan 중의 하나가 아니거나 인수의 개수가 부족하면 적절한 오류 메시지를 출력함.
+#4. 인수들이 적절하게 주어질 경우 강의자료에 주어져 있는 integ() 함수를 사용해 적분 값을 구해 적절히 출력 (intge() 함수를 변경해서는 안됨) 
+#5. 모든 출력은 다음 페이지 실행 예제의 출력 내용을 따라야 함. 
+
+
+
+#include <stdio.h>
+#include <math.h>
+#define PI 3.141592
+
+
+main(int argc, char*argv[])
+
+/*argc(=argument count) : 메인함수에 전달되는 정보의 갯수를 의미
+char *argv(=argument vector) : 메인함수에 전달되는 실질적인 정보로, 문자열의 배열을 의미
+첫번째 문자열은 프로그램의 실행경로로 항상 고정이 되어있음.
+
+아무 정보도 전달하지 않으면 기본적으로 argv의 첫번째 값으로 실행경로가 들어감.
+실행경로 정보 1개 뿐이므로 argc는 1이 됨*/
+
+
+{
+	double integ(double a, double b, int n, double(*f)(double));      /* integrate y = f(x) */
+	double f1(double x); 
+	double low, up, val; // up, low: 적분구간 나타내는 2개의 실수 
+	int nsteps; //분할 구간의 수 
+
+	if (argc < 4) {
+		printf("usage: integ sin/cos/tan lower-limit upper-limit [no-of steps]\n");
+		return 1;
+	}
+
+	nsteps = argv[4] == '\0' ? 100 : atof(argv[4]); //분할 구간의 수가 주어지지 않을 경우 100으로 가정 
+	low = atof(argv[2]); // atof: 문자에 대한 포인터를 인수로 취함 
+	up = atof(argv[3]);
+
+
+	//strcmp: 문자열 비교 
+	//strcmp 형식: strcmp(const char* str1, const char* str2) 
+	//str1: 비교할 문자열 1, str2: 비교할 문자열 2 
+
+	if ( strcmp(argv[1], "sin") == 0)
+		val = integ(low, up, nsteps, sin);
+	else if ( strcmp(argv[1], "cos") == 0) // strcmp: 문자열 비교 
+		val = integ(low, up, nsteps, cos);
+	else if ( strcmp(argv[1], "tan") == 0)
+		val = integ(low, up, nsteps, tan);
+
+	else {
+		printf("unrecognized trigonometric function name: %s\n", argv[1]); //삼각함수 이름이 sin, cos, tan 중의 하나가 아니거나 인수의 개수가 부족하면 적절한 오류 메시지 출력 
+		return 1;
+	}
+
+	printf("int_%g^%g %s(x) = %.3g with %d parts\n", low, up, argv[1], val, nsteps);
+	return 0;
+}
+
+//%g: 실수형으로 자동출력 
+//%f: 실수형 
+
+
+
+
+
+
+double integ(double a, double b, int n, double(*f) (double)) //매개변수로 double값을 취하고 double 값을 return하는 함수에 대한 포인터 f
+
+{
+	double sum, x, x1, delta, area;
+	int i;
+
+	delta = (b - a) / n;
+	for (i = 0, sum = 0.0; i < n; i++) {
+
+		x = a + i * delta;
+		x1 = x + delta;
+		area = delta * (f(x) + f(x1)) / 2;
+		sum += area;
+	}
+
+	return sum;
+}
+
+double f1(double x) {
+
+	return x * x + x;
+}
+
+
+
+//return 0: 정상 종료
+//return -1: 에러 발생 
+//return 1: 장상 종료 되었으나 다른 무엇인가 있음을 나타냄
