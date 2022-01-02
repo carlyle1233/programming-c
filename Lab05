@@ -1,0 +1,40 @@
+
+// write a funciont setbits(x,p,n,y) that returns x with the n bits that begin at 
+position p set to the rightmost n bits of y, leaving the other bits unchanged // 
+
+
+
+
+
+#include <stdio.h>
+#include <string.h>
+
+unsigned setbits(unsigned x, int p, int n, unsigned y)
+{
+
+	int bitsA = x & (~0 << p+1 );                            
+	int bitsC = x & ~(~0 << p -n +1); 
+	int bitsE = y & ~(~0 << n);
+
+	bitsE = (bitsE << p -n +1);
+
+	x = bitsA | bitsC;
+	y = bitsE;
+
+	return (x | y);
+}
+
+
+int main() {
+	printf("setbits(0X12345678, 7, 8, 0X89ABCDEF)= %X\n",
+		setbits(0X12345678, 7, 8, 0X89ABCDEF));
+
+	printf("setbits(0X12345678, 15, 16, 0X89ABCDEF) = %X\n",
+		setbits(0X12345678, 15, 16, 0X89ABCDEF));
+
+	printf("setbits(0X12345678, 15, 8, 0X89ABCDEF) = %X\n",
+		setbits(0X12345678, 15, 8, 0X89ABCDEF));
+
+	printf("setbits(0X12345678, 9, 10, 0X89ABCDEF) = %X\n",
+		setbits(0X12345678, 9, 10, 0X89ABCDEF));
+}
