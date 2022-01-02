@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+void strmul(char s[], char t[], int n);
+void strsum(char s[], char t[], char u[]);
+
+int main() {
+
+	char s[100], t[100], u[100];
+
+	strmul(t, "abc", 2);
+	strmul(u, "DE", 3);
+	strsum(s, t, u);
+
+	printf("출력: %s\n", s);
+
+	return 0;
+}
+
+void strmul(char s[], char t[], int n) {
+
+	int a, si, ti;
+	a = 0, si = 0;
+
+	while (a < n) {
+		ti = 0;
+		while (t[ti] != '\0') {
+			s[si] = t[ti];
+			si++, ti++;
+		}
+		a++;
+
+	}
+	s[si] = '\0';
+
+}
+
+
+	void strsum(char s[], char t[], char u[]) {
+
+		int i, j;
+
+		i = 0;
+		while ((s[i] = t[i]) != '\0') {
+			++i;
+		}
+		j = 0;
+		while ((s[i] = u[j]) != '\0') {
+			i++;
+			j++;
+		}
+	}
