@@ -1,0 +1,49 @@
+#question: print prime number under 1000 
+
+#psuedo code 
+#1. use array prime[1000]
+#2. reset prime[1000] to 1, prime[p]=1 means p is a prime number 
+#3. the smallest prime number is 2. 
+#4. start from 2, and let the prime numbers be defined p. define p multiples to 0 so that it's not prime number 
+#5. p should not be over 31.62 (1000 square root) 
+#6. print the index of prime[]=1, and 15 in line 
+
+
+
+
+#include <stdio.h>
+
+main() {
+
+
+	int prime[1000], p;
+	prime[0] = prime[1] = 0;
+
+
+	for (p = 2; p < 1000; p++) {
+		prime[p] = 1;
+	}
+
+	for (p = 2; p*p < 1000; p++) {
+		if (prime[p] == 1)
+		{int i; 
+		for (i = 2; i*p < 1000; i++) {
+			prime[i*p] = 0;
+		}
+		} }
+
+
+	int i;
+	i = 0;
+
+	for (p = 0; p < 1000; p++) {
+		if (prime[p] == 1) {
+			printf("%3d ", p);
+				 i++; 
+				if (i % 15 == 0) {
+					printf("\n"); 
+				}
+		}
+	}
+
+}
