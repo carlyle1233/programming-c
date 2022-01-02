@@ -1,8 +1,18 @@
+
+#string repeat using strmul 
+#use printf 
+#use strsum
+
+
+
 #include <stdio.h>
 
 void strmul(char s[], char t[], int n);
 void strsum(char s[], char t[], char u[]);
 
+
+
+ 
 int main() {
 
 	char s[100], t[100], u[100];
